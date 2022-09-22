@@ -4,8 +4,6 @@ import matplotlib as mpl
 import numpy as np
 import matplotlib.pyplot as plt
 
-# test = input("train : 0 / test : 1 >> ")
-
 #train data
 data=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature 2L_1000.xls')
 
@@ -95,9 +93,9 @@ yyy_te=to_categorical(yy_te)
 # Adding the input layer and first hidden layer
 model.add(Dense(64, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
 # Adding the second hidden layer
-model.add(Dense(128, kernel_initializer='he_normal', activation = 'leaky_relu'))
-# Adding the second hidden layer
 model.add(Dense(32, kernel_initializer='he_normal', activation = 'leaky_relu'))
+# Adding the second hidden layer
+# model.add(Dense(32, kernel_initializer='he_normal', activation = 'leaky_relu'))
 # Adding the output layer
 model.add(Dense(13, kernel_initializer='he_normal', activation = 'softmax'))
 
@@ -115,7 +113,7 @@ acc=np.array(results.history['accuracy'])
 
 for i in range(epoch):
     if result[i] > result[i-1]:
-        model.save('C:/Python/hj_psl/hj_learning_ab.h5')
+        model.save('C:/Python/uou_psl/hj_learning_ab.h5')
     else:
         pass
         
