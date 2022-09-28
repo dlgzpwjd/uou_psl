@@ -2,11 +2,11 @@
 
 # 데이터 불러오기
 import pandas as pd
-file1 = pd.read_excel('/Users/jhr96/Desktop/PYTHON/excel/feature_normal.xls')
-file2 = pd.read_excel('/Users/jhr96/Desktop/PYTHON/excel/fault_feature_jirak.xls')
-file3 = pd.read_excel('/Users/jhr96/Desktop/PYTHON/excel/fault_feature_seongan.xls')
+data_g=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature_jirak.xls')
+data_l=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature_seongan.xls')
+data_n=pd.read_excel('C:/Users/user/Desktop/psl/feature_normal.xls')
 
-df = pd.concat([file1, file2, file3])
+df = pd.concat([data_g, data_l, data_n])
 
 print(df)
 
@@ -29,19 +29,21 @@ print(df)
 y = df.filter(['type']) 
 X = df.drop(['target','type','m'], axis=1)
 
-
-
 # 트레이닝 / 테스트 데이터 분할
 from sklearn.model_selection import train_test_split
-X_tn, X_te, y_tn, y_te=train_test_split(X,y,random_state=0)
+X_tn, X_te, y_tn, y_te=train_test_split(X,y,test_size=0.2,random_state=0)
+
 
 # 데이터 학습 (k-최근접이웃)
 from sklearn.neighbors import KNeighborsClassifier
-clf_knn = KNeighborsClassifier(n_neighbors=4)
-clf_knn.fit(X_tn, y_tn)
+knn = KNeighborsClassifier(n_neighbors=4)
+knn.fit(X_tn, y_tn)
+
+import joblib
+joblib.dump(knn,'./knn_model.pkl')
 
 # 데이터 예측
-knn_pred = clf_knn.predict(X_te)
+knn_pred = knn.predict(X_te)
 print(knn_pred)
 
 # 정확도 평가
@@ -58,3 +60,4 @@ print(conf_matrix)
 from sklearn.metrics import classification_report
 class_report = classification_report(y_te, knn_pred)
 print(class_report)
+
