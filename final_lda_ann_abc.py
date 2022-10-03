@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 ########################################### a jirak ################################################
 # train data
-data=pd.read_excel('C:/Users/CHOI/Desktop/fault_feature_1000_new_j_train.xls') # b,c가 정상데이터로 인식 
+data=pd.read_excel('C:/Users/CHOI/Desktop/train_1L_1000.xlsx') # b,c가 정상데이터로 인식 
 
 X=data.drop(['target','type','m'],axis=1)
 y=data.filter(['target'])
@@ -35,7 +35,7 @@ print(yy)
 
 
 #test data
-data_te=pd.read_excel('C:/Users/CHOI/Desktop/fault_feature_1000_new_j_test.xls')
+data_te=pd.read_excel('C:/Users/CHOI/Desktop/test_1L_200.xlsx')
 
 X_te=data_te.drop(['target','type','m'],axis=1)
 
@@ -101,9 +101,9 @@ yyy_te=to_categorical(yy_te)
 
 # Adding the input layer and first hidden layer / Dense 노드의 수 
 # layer 값이 너무 많아도 gradient vanish를 유발할 수 있어서 조심 / input_dim 9개의 input /
-classifier.add(Dense(4, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
+classifier.add(Dense(64, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
 # Adding the second hidden layer
-classifier.add(Dense(8, kernel_initializer='he_normal', activation = 'leaky_relu'))
+classifier.add(Dense(2, kernel_initializer='he_normal', activation = 'leaky_relu'))
 # Adding the output layer Dense 최종 아웃풋 층을 지정  18개(고장 위치 a,b,c) 값이 나와야함
 classifier.add(Dense(12, kernel_initializer='he_normal', activation = 'softmax'))
 classifier.summary()
@@ -149,7 +149,7 @@ import matplotlib.pyplot as plt
 
 ########################################### b jirak ################################################
 # train data
-data=pd.read_excel('C:/Users/CHOI/Desktop/fault_feature_1000_new_j_train.xls') # b,c가 정상데이터로 인식 
+data=pd.read_excel('C:/Users/CHOI/Desktop/train_1L_1000.xlsx') # b,c가 정상데이터로 인식 
 
 X=data.drop(['target','type','m'],axis=1)
 y=data.filter(['target'])
@@ -177,7 +177,7 @@ print(yy)
 
 
 #test data
-data_te=pd.read_excel('C:/Users/CHOI/Desktop/fault_feature_1000_new_j_test.xls')
+data_te=pd.read_excel('C:/Users/CHOI/Desktop/test_1L_200.xlsx')
 
 X_te=data_te.drop(['target','type','m'],axis=1)
 X_b_te=X_te.filter(['VA_bm','VA_bph','IA_bm','IA_bph','VB_bm','VB_bph','IB_bm','IB_bph','VC_bm','VC_bph','IC_bm','IC_bph','VD_bm','VD_bph','ID_bm','ID_bph'])
@@ -191,7 +191,7 @@ z_te=z_te.to_numpy()
 
 for i in range(0,row_te-1):
     if z_te[i]==1: #a
-        yy_te[i]=1
+        yy_te[i]=0
     elif z_te[i]==2: #b
         yy_te[i]=yy_te[i]
     elif z_te[i]==3: #c
@@ -244,9 +244,9 @@ yyy_te=to_categorical(yy_te)
 
 # Adding the input layer and first hidden layer / Dense 노드의 수 
 # layer 값이 너무 많아도 gradient vanish를 유발할 수 있어서 조심 / input_dim 9개의 input /
-classifier.add(Dense(32, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
+classifier.add(Dense(16, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
 # Adding the second hidden layer
-classifier.add(Dense(64, kernel_initializer='he_normal', activation = 'leaky_relu'))
+classifier.add(Dense(4, kernel_initializer='he_normal', activation = 'leaky_relu'))
 # Adding the output layer Dense 최종 아웃풋 층을 지정  18개(고장 위치 a,b,c) 값이 나와야함
 classifier.add(Dense(13, kernel_initializer='he_normal', activation = 'softmax'))
 classifier.summary()
@@ -289,7 +289,7 @@ print(str(where))
 
 ########################################### c jirak ################################################
 # train data
-data=pd.read_excel('C:/Users/CHOI/Desktop/fault_feature_1000_new_j_train.xls') # b,c가 정상데이터로 인식 
+data=pd.read_excel('C:/Users/CHOI/Desktop/train_1L_1000.xlsx') # b,c가 정상데이터로 인식 
 
 X=data.drop(['target','type','m'],axis=1)
 y=data.filter(['target'])
@@ -317,7 +317,7 @@ print(yy)
 
 
 #test data
-data_te=pd.read_excel('C:/Users/CHOI/Desktop/fault_feature_1000_new_j_test.xls')
+data_te=pd.read_excel('C:/Users/CHOI/Desktop/test_1L_200.xlsx')
 
 X_te=data_te.drop(['target','type','m'],axis=1)
 X_c_te=X_te.filter(['VA_cm','VA_cph','IA_cm','IA_cph','VB_cm','VB_cph','IB_cm','IB_cph','VC_cm','VC_cph','IC_cm','IC_cph','VD_cm','VD_cph','ID_cm','ID_cph'])
@@ -331,7 +331,7 @@ z_te=z_te.to_numpy()
 
 for i in range(0,row_te-1):
     if z_te[i]==1: #a
-        yy_te[i]=1
+        yy_te[i]=0
     elif z_te[i]==2: #b
         yy_te[i]=0
     elif z_te[i]==3: #c
