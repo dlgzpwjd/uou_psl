@@ -1,9 +1,11 @@
-import subprocess
+from traincode.knn_train import * 
+from traincode.line_fault_train import *
+from traincode.ground_fault_train import *
+from traincode.th_phase_fault_train import *
 
-subprocess.call("C:/Python/uou_psl/final code/train/knn_train.py", shell=True)
+epochs = 200
 
-
-# exec(open("C:/Python/uou_psl/final code/train/knn_train.py",encoding="utf-8").read())
-# exec(open("C:/Python/uou_psl/final code/train/ground_fault_train.py",encoding="utf-8").read())
-# exec(open("C:/Python/uou_psl/final code/train/line_fault_train.py",encoding="utf-8").read())
-# exec(open("C:/Python/uou_psl/final code/train/3phase_fault_train.py",encoding="utf-8").read())
+train_knn()
+train_gnd(epochs)
+train_line(epochs)
+train_3ph(epochs)
