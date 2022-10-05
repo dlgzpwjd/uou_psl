@@ -1,12 +1,11 @@
 import pandas as pd
 import numpy as np
 
-# data_g=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature_jirak.xls')
-# data_l=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature_seongan.xls')
-# data_n=pd.read_excel('C:/Users/user/Desktop/psl/feature_normal.xls')
+data_g=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature_jirak.xls')
+data_l=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature_seongan.xls')
+data_n=pd.read_excel('C:/Users/user/Desktop/psl/feature_normal.xls')
 
-# df = pd.concat([data_g, data_l, data_n])
-df=pd.read_excel('C:/Users/user/Desktop/psl/Test DATA 300.xlsx')
+df = pd.concat([data_g, data_l, data_n])
 
 print(df)
 
@@ -38,3 +37,4 @@ print(knn_pred)
 from sklearn.metrics import accuracy_score
 accuracy = accuracy_score(y, knn_pred)
 print(accuracy)
+

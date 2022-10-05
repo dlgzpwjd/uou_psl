@@ -7,6 +7,7 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.models import load_model
 from keras.utils import to_categorical
+import joblib
 
 def train_line(epoch):
     print("line file start!")
@@ -45,6 +46,8 @@ def train_line(epoch):
     Xab_lda_df = pd.DataFrame(Xab_lda)
     Xab = pd.concat([Xab_lda_df],axis=1)
 
+    joblib.dump(lda4,'./lda4.pkl')
+    
     keras.utils.set_random_seed(1)
     model = Sequential()
 
@@ -52,7 +55,7 @@ def train_line(epoch):
 
     model.add(Dense(32, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
     model.add(Dense(256, kernel_initializer='he_normal', activation = 'leaky_relu'))
-    model.add(Dense(12, kernel_initializer='he_normal', activation = 'softmax'))
+    model.add(Dense(13, kernel_initializer='he_normal', activation = 'softmax'))
     model.summary()
     model.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
@@ -90,11 +93,13 @@ def train_line(epoch):
     Xbc_lda_df = pd.DataFrame(Xbc_lda)
     Xbc = pd.concat([Xbc_lda_df],axis=1)
 
+    joblib.dump(lda5,'./lda5.pkl')
+    
     yyy_bc = to_categorical(yy_bc)
 
     model.add(Dense(128, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
     model.add(Dense(128, kernel_initializer='he_normal', activation = 'leaky_relu'))
-    model.add(Dense(12, kernel_initializer='he_normal', activation = 'softmax'))
+    model.add(Dense(13, kernel_initializer='he_normal', activation = 'softmax'))
     model.summary()
     model.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
@@ -131,11 +136,13 @@ def train_line(epoch):
     Xca_lda_df = pd.DataFrame(Xca_lda)
     Xca = pd.concat([Xca_lda_df],axis=1)
 
+    joblib.dump(lda6,'./lda6.pkl')
+    
     yyy_ca = to_categorical(yy_ca)
 
     model.add(Dense(128, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
     model.add(Dense(4, kernel_initializer='he_normal', activation = 'leaky_relu'))
-    model.add(Dense(12, kernel_initializer='he_normal', activation = 'softmax'))
+    model.add(Dense(13, kernel_initializer='he_normal', activation = 'softmax'))
     model.summary()
     model.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 

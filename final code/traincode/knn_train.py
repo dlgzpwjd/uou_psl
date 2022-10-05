@@ -10,10 +10,10 @@ def train_knn():
 
     print("knn file start!")
 
-    data_g=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature_jirak.xls')
-    data_l=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature_seongan.xls')
-    data_n=pd.read_excel('C:/Users/user/Desktop/psl/feature_normal.xls')
-    data_p=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature 3L_100.xls')
+    data_g=pd.read_excel('C:/Users/user/Desktop/psl/train 1L 1000.xlsx')
+    data_l=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature 2L_1000.xls')
+    data_n=pd.read_excel('C:/Users/user/Desktop/psl/train nomal 1000.xlsx')
+    data_p=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature 3L_300.xls')
 
     df = pd.concat([data_g, data_l, data_n,data_p])
 

@@ -13,7 +13,7 @@ data=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature 2L_1000.xls')
 epochs = 200
 
 X_l = data.drop(['target','type'],axis=1)
-y_l = data.filter(['target']) - 1 # to_categorical -> target 1~12 까지 되어있으면 칸을 13칸 줘 0~12 --> 그래서 -1을 해줘서 범위를 0~11로 변환
+y_l = data.filter(['target'])  # to_categorical -> target 1~12 까지 되어있으면 칸을 13칸 줘 0~12 --> 그래서 -1을 해줘서 범위를 0~11로 변환
 z_l = data.filter(['type'])
 
 row_l = y_l.shape[0]
@@ -64,7 +64,7 @@ for dense1 in dense_var1:
 
         classifier.add(Dense(dense1, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
         classifier.add(Dense(dense2, kernel_initializer='he_normal', activation = 'leaky_relu'))
-        classifier.add(Dense(12, kernel_initializer='he_normal', activation = 'softmax'))
+        classifier.add(Dense(13, kernel_initializer='he_normal', activation = 'softmax'))
         classifier.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
         results=classifier.fit(Xca, yyy_ca, batch_size = 10, epochs = epochs, validation_split = 0.2)
         
@@ -124,7 +124,7 @@ for dense1 in dense_var1:
 
         classifier2.add(Dense(dense1, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
         classifier2.add(Dense(dense2, kernel_initializer='he_normal', activation = 'leaky_relu'))
-        classifier2.add(Dense(12, kernel_initializer='he_normal', activation = 'softmax'))
+        classifier2.add(Dense(13, kernel_initializer='he_normal', activation = 'softmax'))
         classifier2.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
         results2=classifier2.fit(Xbc, yyy_bc, batch_size = 10, epochs = epochs, validation_split = 0.2)
         
@@ -179,7 +179,7 @@ for dense1 in dense_var1:
 
         classifier3.add(Dense(dense1, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
         classifier3.add(Dense(dense2, kernel_initializer='he_normal', activation = 'leaky_relu'))
-        classifier3.add(Dense(12, kernel_initializer='he_normal', activation = 'softmax'))
+        classifier3.add(Dense(13, kernel_initializer='he_normal', activation = 'softmax'))
         classifier3.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
         results3=classifier3.fit(Xab, yyy_ab, batch_size = 10, epochs = epochs, validation_split = 0.2)
         

@@ -7,6 +7,7 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.models import load_model
 from keras.utils import to_categorical
+import joblib
 
 def train_3ph(epoch):
 
@@ -14,17 +15,18 @@ def train_3ph(epoch):
 
     data=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature 3L_300.xls') 
 
-    X_abc=data.drop(['target','type'],axis=1)
+    X_abc=data.drop(['target','type','m'], axis = 1)
     y=data.filter(['target']) - 1 
     z=data.filter(['type'])
 
-    lda=LinearDiscriminantAnalysis(n_components=3)
+    lda = LinearDiscriminantAnalysis(n_components=3)
     lda7 = lda.fit(X_abc,y)
 
-    Xabc_lda=lda7.transform(X_abc)
+    Xabc_lda = lda7.transform(X_abc)
     Xabc_lda_df = pd.DataFrame(Xabc_lda)
     Xabc=pd.concat([Xabc_lda_df],axis=1)
-
+    joblib.dump(lda7,'./lda7.pkl')
+    
     yy=to_categorical(y)
 
     keras.utils.set_random_seed(10)

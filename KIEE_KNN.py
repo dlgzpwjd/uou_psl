@@ -2,6 +2,13 @@
 
 # 데이터 불러오기
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+import joblib
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
+
 data_g=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature_jirak.xls')
 data_l=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature_seongan.xls')
 data_n=pd.read_excel('C:/Users/user/Desktop/psl/feature_normal.xls')
@@ -33,16 +40,16 @@ y = df.filter(['type'])
 X = df.drop(['target','type','m'], axis=1)
 
 # 트레이닝 / 테스트 데이터 분할
-from sklearn.model_selection import train_test_split
+
 X_tn, X_te, y_tn, y_te=train_test_split(X,y,test_size=0.2,random_state=0)
 
 
 # 데이터 학습 (k-최근접이웃)
-from sklearn.neighbors import KNeighborsClassifier
+
 knn = KNeighborsClassifier(n_neighbors=4)
 knn.fit(X_tn, y_tn)
 
-import joblib
+
 joblib.dump(knn,'./knn_model.pkl')
 
 # 데이터 예측
@@ -50,17 +57,17 @@ knn_pred = knn.predict(X_te)
 print(knn_pred)
 
 # 정확도 평가
-from sklearn.metrics import accuracy_score
+
 accuracy = accuracy_score(y_te, knn_pred)
 print(accuracy)
 
 # confusion matrix 확인
-from sklearn.metrics import confusion_matrix
+
 conf_matrix = confusion_matrix(y_te, knn_pred)
 print(conf_matrix)
 
 # 분류 리포트 확인
-from sklearn.metrics import classification_report
+
 class_report = classification_report(y_te, knn_pred)
 print(class_report)
 

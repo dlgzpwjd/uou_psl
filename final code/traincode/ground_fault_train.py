@@ -7,6 +7,7 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.models import load_model
 from keras.utils import to_categorical
+import joblib
 
 def train_gnd(epoch):
     print("ground file start!")
@@ -45,14 +46,16 @@ def train_gnd(epoch):
     Xa_lda_df = pd.DataFrame(Xa_lda)
     Xa=pd.concat([Xa_lda_df],axis=1)
 
+    joblib.dump(lda1,'./lda1.pkl')
+    
     keras.utils.set_random_seed(1)
     model = Sequential()
 
     yyy_a=to_categorical(yy_a)
 
-    model.add(Dense(64, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
-    model.add(Dense(2, kernel_initializer='he_normal', activation = 'leaky_relu'))
-    model.add(Dense(12, kernel_initializer='he_normal', activation = 'softmax'))
+    model.add(Dense(128, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
+    model.add(Dense(32, kernel_initializer='he_normal', activation = 'leaky_relu'))
+    model.add(Dense(13, kernel_initializer='he_normal', activation = 'softmax'))
 
     model.summary()
 
@@ -67,7 +70,7 @@ def train_gnd(epoch):
         if results.history['val_accuracy'][i] > hist_val:
             hist_val = results.history['val_accuracy'][i]
             from keras.models import load_model
-            model.save('./line_a.h5')
+            model.save('./ground_a.h5')
         else:
             pass
 
@@ -93,11 +96,13 @@ def train_gnd(epoch):
     Xb_lda_df = pd.DataFrame(Xb_lda)
     Xb = pd.concat([Xb_lda_df],axis=1)
 
+    joblib.dump(lda2,'./lda2.pkl')
+
     yyy_b = to_categorical(yy_b)
 
-    model.add(Dense(16, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
-    model.add(Dense(4, kernel_initializer='he_normal', activation = 'leaky_relu'))
-    model.add(Dense(12, kernel_initializer='he_normal', activation = 'softmax'))
+    model.add(Dense(64, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
+    model.add(Dense(32, kernel_initializer='he_normal', activation = 'leaky_relu'))
+    model.add(Dense(13, kernel_initializer='he_normal', activation = 'softmax'))
     model.summary()
 
     model.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
@@ -110,7 +115,7 @@ def train_gnd(epoch):
         if results.history['val_accuracy'][i] > hist_val:
             hist_val = results.history['val_accuracy'][i]
             from keras.models import load_model
-            model.save('./line_b.h5')
+            model.save('./ground_b.h5')
         else:
             pass
 
@@ -136,11 +141,13 @@ def train_gnd(epoch):
     Xc_lda_df = pd.DataFrame(Xc_lda)
     Xc=pd.concat([Xc_lda_df],axis=1)
 
+    joblib.dump(lda3,'./lda3.pkl')
+    
     yyy_c=to_categorical(yy_c)
 
-    model.add(Dense(4, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
-    model.add(Dense(8, kernel_initializer='he_normal', activation = 'leaky_relu'))
-    model.add(Dense(12, kernel_initializer='he_normal', activation = 'softmax'))
+    model.add(Dense(128, kernel_initializer='he_normal', activation = 'leaky_relu', input_dim = 3))
+    model.add(Dense(32, kernel_initializer='he_normal', activation = 'leaky_relu'))
+    model.add(Dense(13, kernel_initializer='he_normal', activation = 'softmax'))
     model.summary()
 
     model.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
@@ -153,7 +160,7 @@ def train_gnd(epoch):
         if results.history['val_accuracy'][i] > hist_val:
             hist_val = results.history['val_accuracy'][i]
             from keras.models import load_model
-            model.save('./line_c.h5')
+            model.save('./ground_c.h5')
         else:
             pass
         
