@@ -1,19 +1,15 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 import joblib
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import classification_report
 
-def train_knn():
+def train_knn(path):
 
     print("knn file start!")
 
-    data_g=pd.read_excel('C:/Users/user/Desktop/psl/train 1L 1000.xlsx')
-    data_l=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature 2L_1000.xls')
-    data_n=pd.read_excel('C:/Users/user/Desktop/psl/train nomal 1000.xlsx')
-    data_p=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature 3L_300.xls')
+    data_g=pd.read_excel(path + '/dataset/train 1L 1000.xlsx')
+    data_l=pd.read_excel(path + '/dataset/train 2L 1000.xls')
+    data_n=pd.read_excel(path + '/dataset/train nomal 1000.xlsx')
+    data_p=pd.read_excel(path + '/dataset/train 3L 300.xls')
 
     df = pd.concat([data_g, data_l, data_n,data_p])
 

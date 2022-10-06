@@ -4,27 +4,23 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.layers import Dropout
-from keras.models import load_model
 from keras.utils import to_categorical
 import joblib
 
-def train_3ph(epoch):
+def train_3ph(path, epoch):
 
     print("3phase file start!")
 
-    data=pd.read_excel('C:/Users/user/Desktop/psl/fault_feature 3L_300.xls') 
+    data=pd.read_excel(path + '/dataset/train 3L 300.xls') 
 
     X_abc=data.drop(['target','type','m'], axis = 1)
-    y=data.filter(['target']) - 1 
-    z=data.filter(['type'])
+    y=data.filter(['target']) - 1
 
     lda = LinearDiscriminantAnalysis(n_components=3)
-    lda7 = lda.fit(X_abc,y)
-
+    lda7 = lda.fit(X_abc, y)
     Xabc_lda = lda7.transform(X_abc)
-    Xabc_lda_df = pd.DataFrame(Xabc_lda)
-    Xabc=pd.concat([Xabc_lda_df],axis=1)
+    Xabc = pd.DataFrame(Xabc_lda)
+    
     joblib.dump(lda7,'./lda7.pkl')
     
     yy=to_categorical(y)

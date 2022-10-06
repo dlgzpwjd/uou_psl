@@ -1,35 +1,25 @@
 import pandas as pd
 import numpy as np
+import os
 import joblib
 import keras
 from keras.models import Sequential
 from keras.models import load_model
 
-keras.utils.set_random_seed(1)
+keras.utils.set_random_seed(10)
 model = Sequential()
 
-data = pd.read_excel("C:/Users/user/Desktop/psl/Test DATA 1700.xlsx")
+dir = os.path.realpath(__file__)
+path = os.path.abspath(os.path.join(dir, os.pardir))
+
+data = pd.read_excel(path + "/dataset/Test DATA 1700.xlsx")
 X = data.drop(['target','type','m'], axis = 1)
 y = data.filter(['type'])
 z = data.filter(['target'])
-# target = []
-
-# for idx, row in data.iterrows():
-#     if row['type'] == 0:
-#         target.append(0)
-#     elif row['type'] == 1 or row['type'] == 2 or row['type'] == 3:
-#         target.append(1)
-#     elif row['type'] == 4 or row['type'] == 5 or row['type'] == 6:
-#         target.append(2)
-#     else:
-#         target.append(3)
         
 knn_test=joblib.load('./knn_model.pkl')
 knn_pred = knn_test.predict(X)
 data['knn_pred'] = knn_pred
-
-# accuracy = accuracy_score(target, knn_pred)
-# print(accuracy)
 
 normal = data[data['knn_pred'] == 0]
 ground = data[data['knn_pred'] == 1]
@@ -127,8 +117,7 @@ Xabc = pd.DataFrame(Xabc_lda)
 modelabc = load_model("./3phase.h5")
 pred_abc = modelabc.predict(Xabc, batch_size = 1)    
 
-##############################################################################################################
-
+################################################ test 결과 확인 ################################################
 pred_target = np.zeros((len(X), 1))
 pred_type = np.zeros((len(X), 1))
 
@@ -137,16 +126,12 @@ pred_b = np.reshape(np.argmax(pred_b, axis=1), (-1, 1))
 pred_c = np.reshape(np.argmax(pred_c, axis=1), (-1, 1))
 
 pred_g = np.concatenate((pred_a, pred_b, pred_c), axis=1)
-
+print(pred_g)
 i = 0
 for idx in gnd_idx:
     pred_target[idx] = np.sum(pred_g[i, :])
-    pred_type[idx] = np.argmax(pred_g[i, :]) + 1 # 0 1 2 -> +1 을 해주면 1 2 3
+    pred_type[idx] = np.argmax(pred_g[i, :]) + 1 
     i = i+1
-
-# pred_g = pd.DataFrame(pred_g)
-# print(pred_g)
-# pred_g.to_excel('result_ground.xlsx')
 
 y_g = ground.filter(['target'])
 z_g = ground.filter(['type'])
@@ -157,19 +142,17 @@ z_g = z_g.to_numpy()
 con_g = np.zeros((row_g, 3))
 for i in range(0, row_g-1):
     if z_g[i] == 1:
-        con_g[i, 0] = yy_g[i] -1
+        con_g[i, 0] = yy_g[i]
     elif z_g[i] == 2:
-        con_g[i, 1] = yy_g[i] -1
+        con_g[i, 1] = yy_g[i]
     elif z_g[i] == 3:
-        con_g[i, 2] = yy_g[i] -1
+        con_g[i, 2] = yy_g[i]
  
-# print(con_g)
 last_g = (con_g == pred_g)
-# print(last_g)
 
 accuracy_g = np.sum(last_g) / (last_g.shape[0] * last_g.shape[1]) * 100
 
-print("Accuracy : %.4f %%" %(accuracy_g))
+print("지락 Accuracy : %.4f %%" %(accuracy_g))
 ###############################################################################
 pred_ab = np.reshape(np.argmax(pred_ab, axis=1), (-1, 1))
 pred_bc = np.reshape(np.argmax(pred_bc, axis=1), (-1, 1))
@@ -180,11 +163,9 @@ pred_l = np.concatenate((pred_ab, pred_bc, pred_ca), axis=1)
 i = 0
 for idx in line_idx:
     pred_target[idx] = np.sum(pred_l[i, :])
-    pred_type[idx] = np.argmax(pred_l[i, :]) + 4 # 0 1 2 -> +1 을 해주면 1 2 3
+    pred_type[idx] = np.argmax(pred_l[i, :]) + 4 
     i = i+1
-# pred_l = pd.DataFrame(pred_l)
-# print(pred_l.shape)
-# pred_l.to_excel('result_line.xlsx')
+
 y_l = line.filter(['target'])
 z_l = line.filter(['type'])
 row_l = y_l.shape[0]
@@ -194,26 +175,24 @@ z_l = z_l.to_numpy()
 con_l = np.zeros((row_l, 3))
 for i in range(0, row_l-1):
     if z_l[i] == 4:
-        con_l[i, 0] = yy_l[i] -1
+        con_l[i, 0] = yy_l[i] 
     elif z_l[i] == 5:
-        con_l[i, 1] = yy_l[i] -1
+        con_l[i, 1] = yy_l[i]
     elif z_l[i] == 6:
-        con_l[i, 2] = yy_l[i] -1
+        con_l[i, 2] = yy_l[i]
  
-# print(con_l)
 last_l = (con_l == pred_l)
-# print(last_l)
 
 accuracy_l = np.sum(last_l) / (last_l.shape[0] * last_l.shape[1]) * 100
 
-print("Accuracy : %.4f %%" %(accuracy_l))
+print("선간 Accuracy : %.4f %%" %(accuracy_l))
 ###############################################################################
 pred_p = np.reshape(np.argmax(pred_abc, axis=1), (-1, 1))
 
 i = 0
 for idx in ph_idx:
     pred_target[idx] = np.sum(pred_p[i, :])
-    pred_type[idx] = 7 # 0 1 2 -> +1 을 해주면 1 2 3
+    pred_type[idx] = 7 
     i = i+1
 
 data['pred_target'] = pred_target
@@ -222,23 +201,13 @@ data['pred_type'] = pred_type
 y_p = phase.filter(['target']) -1
 z_p = phase.filter(['type'])
 con_p = y_p.to_numpy()
-# print(con_p)
 last_p = (con_p == pred_p)
-# print(last_p)
 
 accuracy_p = np.sum(last_p) / (last_p.shape[0] * last_p.shape[1]) * 100
 
-print("Accuracy : %.4f %%" %(accuracy_p))
-# pred_p = pd.DataFrame(pred_p)
-# print(pred_p.shape)
+print("3상 Accuracy : %.4f %%" %(accuracy_p))
 data.to_excel('result.xlsx')
 
-last_type = (y == pred_type)
-accuracy_type = np.sum(last_type) / (last_type.shape[0] * last_type.shape[1]) * 100
+accuracy_total = (np.sum(last_p) + np.sum(last_l) + np.sum(last_g)) / ((last_g.shape[0] * last_g.shape[1]) + (last_l.shape[0] * last_l.shape[1]) + (last_p.shape[0] * last_p.shape[1])) * 100
 
-print("type Accuracy : %.4f %%" %(accuracy_type))
-
-last_target = (z == (pred_target+1))
-accuracy_target = np.sum(last_target) / (last_target.shape[0] * last_target.shape[1]) * 100
-
-print("target Accuracy : %.4f %%" %(accuracy_target))
+print("total Accuracy : %.4f %%" %(accuracy_total))
