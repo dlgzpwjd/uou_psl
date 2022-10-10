@@ -12,7 +12,7 @@ model = Sequential()
 dir = os.path.realpath(__file__)
 path = os.path.abspath(os.path.join(dir, os.pardir))
 
-data = pd.read_excel(path + "/dataset/Test DATA 1700.xlsx")
+data = pd.read_excel(path + "/dataset/Test DATA.xlsx")
 X = data.drop(['target','type','m'], axis = 1)
 y = data.filter(['type'])
 z = data.filter(['target'])
@@ -152,7 +152,7 @@ for i in range(0, len(pred_g)):
     if tar_g[i] == y_g.to_numpy()[i] and type_g[i] == z_g.to_numpy()[i]:
         correct_g = correct_g + 1
 
-accuracy_g = correct_g / 1000 * 100
+accuracy_g = correct_g / 100 * 100
 
 print("지락 Accuracy : %.4f %%" %(accuracy_g))
 ###############################################################################
@@ -181,7 +181,7 @@ for i in range(0, len(pred_l)):
         correct_l = correct_l + 1
         
 
-accuracy_l = correct_l / 300 * 100
+accuracy_l = correct_l / 100 * 100
 
 print("선간 Accuracy : %.4f %%" %(accuracy_l))
 ###############################################################################
@@ -205,11 +205,11 @@ for i in range(0, len(pred_p)):
     if z_p.to_numpy()[i] == 7 and pred_p[i] == y_p.to_numpy()[i]:
         correct_p = correct_p + 1
 
-accuracy_p = correct_p / 100 * 100
+accuracy_p = correct_p / 30 * 100
 
 print("3상 Accuracy : %.4f %%" %(accuracy_p))
 
 data.to_excel(path + "/result.xlsx")
 
-accuracy_total = (correct_p + correct_l + correct_n + correct_g) / 1700 *100
+accuracy_total = (correct_p + correct_l + correct_n + correct_g) / 330 *100
 print("total Accuracy : %.4f %%" %(accuracy_total))
