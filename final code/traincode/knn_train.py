@@ -33,7 +33,7 @@ def train_knn(path):
     knn = KNeighborsClassifier(n_neighbors=4)
     knn.fit(X, y)
 
-    joblib.dump(knn,'./knn.pkl')
+    joblib.dump(knn, path + '/model/knn.pkl')
 
     print("knn file complete!")
     

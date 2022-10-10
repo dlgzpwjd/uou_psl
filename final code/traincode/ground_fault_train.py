@@ -5,11 +5,12 @@ import keras
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.utils import to_categorical
+import joblib
 
 def train_gnd(path, epoch):
     print("ground file start!")
 
-    data_g = pd.read_excel(path + '/dataseet/train 1L 1000.xlsx')
+    data_g = pd.read_excel(path + '/dataset/train 1L 1000.xlsx')
 
     X_g = data_g.drop(['target','type','m'],axis=1)
     y_g = data_g.filter(['target'])
@@ -48,7 +49,7 @@ def train_gnd(path, epoch):
     Xa_lda=lda1.transform(X_a)
     Xa = pd.DataFrame(Xa_lda)
 
-    joblib.dump(lda1,'./lda1.pkl')
+    joblib.dump(lda1,path + '/model/lda1.pkl')
     
     yyy_a = to_categorical(yy_a)
 
@@ -67,7 +68,7 @@ def train_gnd(path, epoch):
     for i in range(epoch):
         if results.history['val_accuracy'][i] > hist_val:
             hist_val = results.history['val_accuracy'][i]
-            modela.save('./ground_a.h5')
+            modela.save(path + '/model/ground_a.h5')
         else:
             pass
 
@@ -93,7 +94,7 @@ def train_gnd(path, epoch):
     Xb_lda = lda2.transform(X_b)
     Xb = pd.DataFrame(Xb_lda)
 
-    joblib.dump(lda2,'./lda2.pkl')
+    joblib.dump(lda2,path + '/model/lda2.pkl')
 
     yyy_b = to_categorical(yy_b)
 
@@ -111,7 +112,7 @@ def train_gnd(path, epoch):
     for i in range(epoch):
         if results.history['val_accuracy'][i] > hist_val:
             hist_val = results.history['val_accuracy'][i]
-            modelb.save('./ground_b.h5')
+            modelb.save(path + '/model/ground_b.h5')
         else:
             pass
 
@@ -137,7 +138,7 @@ def train_gnd(path, epoch):
     Xc_lda=lda3.transform(X_c)
     Xc = pd.DataFrame(Xc_lda)
 
-    joblib.dump(lda3,'./lda3.pkl')
+    joblib.dump(lda3,path + '/model/lda3.pkl')
     
     yyy_c = to_categorical(yy_c)
 
@@ -155,7 +156,7 @@ def train_gnd(path, epoch):
     for i in range(epoch):
         if results.history['val_accuracy'][i] > hist_val:
             hist_val = results.history['val_accuracy'][i]
-            modelc.save('./ground_c.h5')
+            modelc.save(path + '/model/ground_c.h5')
         else:
             pass
         

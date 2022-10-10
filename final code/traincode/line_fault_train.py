@@ -50,7 +50,7 @@ def train_line(path, epoch):
     Xab_lda = lda4.transform(X_ab)
     Xab = pd.DataFrame(Xab_lda)
 
-    joblib.dump(lda4,'./lda4.pkl')
+    joblib.dump(lda4,path + '/model/lda4.pkl')
     
     yyy_ab=to_categorical(yy_ab)
 
@@ -67,7 +67,7 @@ def train_line(path, epoch):
     for i in range(epoch):
         if results.history['val_accuracy'][i] > hist_val:
             hist_val = results.history['val_accuracy'][i]
-            modela.save('./line_ab.h5')
+            modela.save(path + '/model/line_ab.h5')
         else:
             pass
 
@@ -95,7 +95,7 @@ def train_line(path, epoch):
     Xbc_lda = lda5.transform(X_bc)
     Xbc = pd.DataFrame(Xbc_lda)
 
-    joblib.dump(lda5,'./lda5.pkl')
+    joblib.dump(lda5,path + '/model/lda5.pkl')
     
     yyy_bc = to_categorical(yy_bc)
 
@@ -112,7 +112,7 @@ def train_line(path, epoch):
     for i in range(epoch):
         if results.history['val_accuracy'][i] > hist_val:
             hist_val = results.history['val_accuracy'][i]
-            modelb.save('./line_bc.h5')
+            modelb.save(path + '/model/line_bc.h5')
         else:
             pass
 
@@ -140,7 +140,7 @@ def train_line(path, epoch):
     Xca_lda = lda6.transform(X_ca)
     Xca = pd.DataFrame(Xca_lda)
 
-    joblib.dump(lda6,'./lda6.pkl')
+    joblib.dump(lda6,path + '/model/lda6.pkl')
     
     yyy_ca = to_categorical(yy_ca)
 
@@ -157,7 +157,7 @@ def train_line(path, epoch):
     for i in range(epoch):
         if results.history['val_accuracy'][i] > hist_val:
             hist_val = results.history['val_accuracy'][i]
-            modelc.save('./line_ca.h5')
+            modelc.save(path + '/model/line_ca.h5')
         else:
             pass
         

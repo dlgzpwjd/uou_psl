@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 import keras
 from keras.models import Sequential
@@ -21,7 +20,7 @@ def train_3ph(path, epoch):
     Xabc_lda = lda7.transform(X_abc)
     Xabc = pd.DataFrame(Xabc_lda)
     
-    joblib.dump(lda7,'./lda7.pkl')
+    joblib.dump(lda7,path + '/model/lda7.pkl')
     
     yy=to_categorical(y)
 
@@ -42,7 +41,7 @@ def train_3ph(path, epoch):
     for i in range(epoch):
         if results.history['val_accuracy'][i] > hist_val:
             hist_val = results.history['val_accuracy'][i]
-            model.save('./3phase.h5')
+            model.save(path + '/model/3phase.h5')
         else:
             pass
         
